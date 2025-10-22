@@ -1,28 +1,25 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import Header from './components/Header.jsx';
+import Hero from './components/Hero.jsx';
+import Chat from './components/Chat.jsx';
+import SettingsPanel from './components/SettingsPanel.jsx';
+import { LocalModelProvider } from './components/LocalModelProvider.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
+    <LocalModelProvider>
+      <div className="min-h-screen flex flex-col bg-neutral-950 text-neutral-100">
+        <Header onOpenSettings={() => setSettingsOpen(true)} />
+        <main className="flex-1">
+          <Hero />
+          <div className="container mx-auto px-4 md:px-6 max-w-5xl -mt-20 relative z-10">
+            <Chat />
+          </div>
+        </main>
+        <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       </div>
-    </div>
-  )
+    </LocalModelProvider>
+  );
 }
-
-export default App
